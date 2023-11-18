@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Your existing head content here -->
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+      type="text/css"
+    />
+    <style>
+      /* Add CSS for the button and map */
+      #showNearbyMarkers {
+        position: absolute;
+        top: 90vh;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #0074d9;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      #showNearbyMarkers:hover {
+        background-color: #0056a9;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="showNearbyMarkers">Show Nearest Safezone</button>
+    <div id="map"></div>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYWRlc2gxMjI2IiwiYSI6ImNsb2s2YzRqcDI0N3Mya3BsOXUzdGQ2YXkifQ.rRL-cGdC7uw-6IMQczNjrA";
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/dark-v11",
+        center: [77.23, 28.61],
+        zoom: 11,
+      });
+
+      const Places = [
+        {
+          name: "Washington Monument",
+          LngLat: [77.36711665446347, 28.521502866881367],
+          color: "red",
+          invisible: true,
+        },
+        {
+          name: "Lincoln Memorial",
+          LngLat: [77.36953064247528, 28.522266431887505],
+          color: "blue",
+        },
+        {
+          name: "Korean War Veterans Memorial",
+          LngLat: [77.36744986480994, 28.520423783651783],
+        },
+      ];
+
+      function calculateDistance(coord1, coord2) {
+        const R = 6371e3; // metres
+        const φ1 = (coord1[1] * Math.PI) / 180; // φ, λ in radians
+        const φ2 = (coord2[1] * Math.PI) / 180;
+        const Δφ = ((coord2[1] - coord1[1]) * Math.PI) / 180;
+        const Δλ = ((coord2[0] - coord1[0]) * Math.PI) / 180;
+
+        const a =
+          Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+          Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // in metres
+      }
+      let directions;
+      map.addControl(
+        new MapboxDirections({
+          accessToken: mapboxgl.accessToken,
+          unit: "metric",
+          profile: "mapbox/driving",
+          interactive: true,
+          controls: {
+            instructions: true,
+          },
+        }),
+        "top-left"
+      );
+      // Define a function to show the nearest marker
+      function showNearestMarker() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            const userLocation = [
+              position.coords.longitude,
+              position.coords.latitude,
+            ];
+
+            let nearestMarker = null;
+            let nearestDistance = Infinity;
+
+            // Find the nearest marker
+            Places.forEach(({ name, LngLat }) => {
+              if (LngLat) {
+                const distance = calculateDistance(userLocation, LngLat);
+
+                if (distance < nearestDistance) {
+                  nearestDistance = distance;
+                  nearestMarker = { name, LngLat };
+                }
+              }
+            });
+
+            // Clear existing markers
+            document
+              .querySelectorAll(".marker")
+              .forEach((markerElement) => markerElement.remove());
+
+            // Display the nearest marker
+            if (nearestMarker) {
+              const { name, LngLat } = nearestMarker;
+              const popup = new mapboxgl.Popup({ offset: 25 }).setText(name);
+              const marker = new mapboxgl.Marker({ scale: 1 })
+                .setLngLat(LngLat)
+                .setPopup(popup)
+                .addTo(map)
+                .getElement();
+              marker.classList.add("marker");
+              console.log("Nearest Marker Added: " + name);
+
+              map.flyTo({
+                center: LngLat,
+                zoom: 12, // Adjust the zoom level as needed
+                essential: true, // This ensures a smooth animation
+              });
+
+              directions.setOrigin([
+                position.coords.longitude,
+                position.coords.latitude,
+              ]);
+              directions.setDestination(LngLat);
+            }
+          });
+        } else {
+          alert("Geolocation is not available in your browser.");
+        }
+      }
+
+      document
+        .getElementById("showNearbyMarkers")
+        .addEventListener("click", showNearestMarker);
+
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true,
+          },
+          trackUserLocation: true,
+          showUserHeading: true,
+        })
+      );
+    </script>
+  </body>
+</html>
