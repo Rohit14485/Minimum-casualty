@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsunami Health Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Health Predictor</h1>
+        <p>Stay prepared and get quick health check during tsunami with our health-predictor. Just select your symptoms from our dropdown menus and get instant predictions for potential diseases as well as recommended remedies. </p>
+    </header>
+    <div class="container">
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom1">Symptom 1:</label>
+            <select id="symptom1" onchange="handleSymptomChange('symptom1', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom2">Symptom 2:</label>
+            <select id="symptom2" onchange="handleSymptomChange('symptom2', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom3">Symptom 3:</label>
+            <select id="symptom3" onchange="handleSymptomChange('symptom3', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom4">Symptom 4:</label>
+            <select id="symptom4" onchange="handleSymptomChange('symptom4', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom5">Symptom 5:</label>
+            <select id="symptom5" onchange="handleSymptomChange('symptom5', this.value)"></select>
+        </div>
+
+        <div class="result">
+            <h2>Predicted Disease:</h2>
+            <p id="disease"></p>
+            <h2>Home Remedy:</h2>
+            <p id="remedy"></p>
+        </div>
+        <button id="predict" onclick="predictDisease()">Predict Disease</button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
