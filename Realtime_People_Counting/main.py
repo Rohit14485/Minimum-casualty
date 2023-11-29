@@ -12,8 +12,7 @@ from itertools import zip_longest
 
 
 
-#python main.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/example_01.mp4
-
+#python main.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/ex2.mp4 --place sation.csv
 t0 = time.time()
 
 def run():
