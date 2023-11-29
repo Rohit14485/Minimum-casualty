@@ -28,6 +28,8 @@ def run():
 		help="path to optional input video file")
 	ap.add_argument("-o", "--output", type=str,
 		help="path to optional output video file")
+	ap.add_argument("-f", "--place", type=str,
+		help="path to csv file")
 	# confidence default 0.4
 	ap.add_argument("-c", "--confidence", type=float, default=0.4,
 		help="minimum probability to filter weak detections")
@@ -247,12 +249,12 @@ def run():
 	
 	
 		if config.Log:
-			print("adfsdfadsdf")
+
 			datetimee = [datetime.datetime.now()]
 			d = [datetimee, empty1, empty, x]
 			export_data = zip_longest(*d, fillvalue = '')
 
-			with open('Log.csv', 'w', newline='') as myfile:
+			with open('place', 'w', newline='') as myfile:
 				wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
 				wr.writerow(("End Time", "In", "Out", "Total Inside"))
 				wr.writerows(export_data)
@@ -284,16 +286,15 @@ def run():
 	print("adfsdfadsdf")
 	import csv  
     
-
-	fields = ['End Time','In','Out','Total Inside']  
-	rows = ['Nikhil', totalUp, totalDown, x],  
+	okk=totalUp-totalDown
+	
+	rows = [okk]
         
 
-	filename = "Log.csv"
+	filename = args["place"]
 
 	with open(filename, 'w') as csvfile:  
 		csvwriter = csv.writer(csvfile) 
-		csvwriter.writerow(fields)  
 		csvwriter.writerow(rows) 
 	
 		 
