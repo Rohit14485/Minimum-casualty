@@ -9,6 +9,7 @@ import numpy as np
 import argparse, imutils
 import time, dlib, cv2, datetime
 from itertools import zip_longest
+import csv  
 
 
 
@@ -247,17 +248,7 @@ def run():
 
 	
 	
-		if config.Log:
-
-			datetimee = [datetime.datetime.now()]
-			d = [datetimee, empty1, empty, x]
-			export_data = zip_longest(*d, fillvalue = '')
-
-			with open('place', 'w', newline='') as myfile:
-				wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-				wr.writerow(("End Time", "In", "Out", "Total Inside"))
-				wr.writerows(export_data)
-
+		
 
 		
 		cv2.imshow("Real-Time Monitoring/Analysis Window", frame)
@@ -267,7 +258,16 @@ def run():
 		if key == ord("q"):
 			break
 
+		okk=totalUp-totalDown
 	
+		rows = [okk]
+        
+
+		filename = args["place"]
+
+		with open(filename, 'w') as csvfile:  
+			csvwriter = csv.writer(csvfile) 
+			csvwriter.writerow(rows) 
 		totalFrames += 1
 		fps.update()
 
@@ -283,18 +283,9 @@ def run():
 	print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
 	print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 	print("adfsdfadsdf")
-	import csv  
-    
-	okk=totalUp-totalDown
 	
-	rows = [okk]
-        
-
-	filename = args["place"]
-
-	with open(filename, 'w') as csvfile:  
-		csvwriter = csv.writer(csvfile) 
-		csvwriter.writerow(rows) 
+    
+	
 	
 		 
    
