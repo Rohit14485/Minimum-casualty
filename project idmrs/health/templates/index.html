@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tsunami Health Predictor</title>
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    font-variant: small-caps;
+  }
+
+  header {
+    /* border:1px solid red; */
+    padding: 8px;
+    height: 60vh;
+    color: white;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgb(8, 6, 6, 0.3);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.769), rgba(255, 255, 255, 0.665));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  header::before {
+    /* border:2px solid blue; */
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    background: url("https://i.ytimg.com/vi/KN65bEIZr4o/maxresdefault.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: -1;
+  }
+
+  h1 {
+    /* border: 1px solid red; */
+    padding-left: 10px;
+    font-size: 4.5rem;
+    font-variant: small-caps;
+    letter-spacing: 1.5px;
+  }
+
+  p {
+    /* border: 1px solid red; */
+    padding-left: 10px;
+    border-radius: 20px;
+    width: 50%;
+    font-size: 1.4rem;
+    font-variant: small-caps;
+    letter-spacing: 1px;
+  }
+
+  .hero_section {
+    /* border: 1px solid #000; */
+    margin-top: -10px;
+    display: flex;
+  }
+
+  .container {
+    background-color: #ffffff75;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: auto;
+    /* max-width: 600px; */
+    margin: 20px;
+  }
+
+  /* symptom dropdown */
+  label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #ece9e9;
+    margin-top: 8px;
+    padding: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  /* results */
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .result {
+    display: none;
+  }
+
+  /* select options */
+  select option {
+    font-weight: normal;
+  }
+
+  .container button {
+    margin-top: 10px;
+    padding: 15px 35px;
+    border: none;
+    box-shadow: 2px 2px 5px black;
+    font-variant: small-caps;
+    font-weight: 700;
+    font-size: 1rem;
+    background: #ece9e9;
+    border-radius: 25px;
+    transition: color, background, box-shadow, 0.5s;
+  }
+
+  .container button:hover {
+    color: white;
+    background: #000;
+  }
+
+  .model {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px 20px 0px 0px;
+    width: 70%;
+    padding: 20px 0px 20px 0px;
+  }
+
+  .model h1 {
+    /* border:1px solid #000; */
+    text-align: center;
+    padding-bottom: 20px;
+    font-variant: small-caps;
+    text-shadow: -2px 2px 5px rgba(52, 51, 51, 0.721);
+  }
+
+  .about {
+    /* border:1px solid blue; */
+    background: rgba(211, 173, 69, 0.138);
+    height: 420px;
+    padding-inline: 10px;
+    overflow: auto;
+    box-shadow: inset 0px 0.6px 5px black;
+  }
+
+  .about p {
+    width: 100%;
+    text-align: justify;
+  }
+</style>
+
+<body>
+  <header>
+    <h1>Health Predictor</h1>
+    <p>Stay prepared and get quick health check during tsunami with our health-predictor. Just select your symptoms from
+      our dropdown menus and get instant predictions for potential diseases as well as recommended remedies. </p>
+  </header>
+  <section class="hero_section">
+    <form action="/predict" method="POST">
+      <div class="container">
+
+        <div class="symptom-dropdown">
+          <label for="symptom1">Symptom 1:</label>
+          <select id="symptom1" onchange="handleSymptomChange('symptom1', this.value)"></select>
+        </div>
+
+        <div class="symptom-dropdown">
+          <label for="symptom2">Symptom 2:</label>
+          <select id="symptom2" onchange="handleSymptomChange('symptom2', this.value)"></select>
+        </div>
+
+        <div class="symptom-dropdown">
+          <label for="symptom3">Symptom 3:</label>
+          <select id="symptom3" onchange="handleSymptomChange('symptom3', this.value)"></select>
+        </div>
+
+        <div class="symptom-dropdown">
+          <label for="symptom4">Symptom 4:</label>
+          <select id="symptom4" onchange="handleSymptomChange('symptom4', this.value)"></select>
+        </div>
+
+        <div class="symptom-dropdown">
+          <label for="symptom5">Symptom 5:</label>
+          <select id="symptom5" onchange="handleSymptomChange('symptom5', this.value)"></select>
+        </div>
+
+        <div class="result">
+          <h2>Predicted Disease:</h2>
+          <p id="disease"></p>
+          <h2>Home Remedy:</h2>
+          <p id="remedy"></p>
+        </div>
+        <button id="predict">Predict Disease</button>
+      </div>
+      <div style="display: none;">
+        <input type="text" id="1" name="1" value="0">
+        <input type="text" id="2" name="2" value="0">
+        <input type="text" id="3" name="3" value="0">
+        <input type="text" id="4" name="4" value="0">
+        <input type="text" id="5" name="5" value="0">
+      </div>
+    </form>
+
+    <div class="model">
+      <div id="output">
+        {% if label %}
+        <h1 id="label">{{label}}</h1>
+        {% endif %}
+      </div>
+      <div class="about">
+        <p></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- <script src="script.js"></script> -->
+  <script>
+    let symptoms = ['back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
+      'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
+      'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
+      'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
+      'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
+      'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
+      'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
+      'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
+      'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
+      'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
+      'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
+      'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
+      'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
+      'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria', 'family_history', 'mucoid_sputum',
+      'rusty_sputum', 'lack_of_concentration', 'visual_disturbances', 'receiving_blood_transfusion',
+      'receiving_unsterile_injections', 'coma', 'stomach_bleeding', 'distention_of_abdomen',
+      'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum', 'prominent_veins_on_calf',
+      'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling',
+      'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
+      'yellow_crust_ooze'];
+    const state = {
+      symptom1: 0,
+      symptom2: 0,
+      symptom3: 0,
+      symptom4: 0,
+      symptom5: 0,
+      disease: '',
+      remedy: '',
+    };
+
+    const handleSymptomChange = (symptomName, value) => {
+      state[symptomName] = value;
+      // alert(symptomName);
+      // alert(value);
+      document.getElementById(symptomName[7]).setAttribute("value", `${value}`);
+      document.getElementById(symptomName[7]).value = value;
+    };
+
+    // Function to generate options dynamically
+    function generateOptions(count, selectId) {
+      const selectElement = document.getElementById(selectId);
+      for (let i = 0; i < count; i++) {
+        const option = document.createElement('option');
+        option.value = `${i}`;
+        option.textContent = `${symptoms[i]}`;
+        selectElement.appendChild(option);
+      }
+    }
+
+    // Call the generateOptions function for each select tag
+    generateOptions(95, 'symptom1');
+    generateOptions(95, 'symptom2');
+    generateOptions(95, 'symptom3');
+    generateOptions(95, 'symptom4');
+    generateOptions(95, 'symptom5');
+
+    const res = document.getElementById("label");
+    // console.log(typeof(res.innerHTML));
+    // console.log(res.innerHTML);
+    const content = document.getElementsByClassName("about")[0];
+    if (res.innerHTML === "[0]") {
+      res.innerHTML = "fungal infection";
+    }
+    else if (res.innerHTML === "[1]") {
+      res.innerHTML = "hypertension";
+      content.innerHTML = `<p>Hypertension, commonly known as high blood pressure, is a prevalent medical condition characterized by the sustained elevation of blood pressure levels in the arteries. This condition is often asymptomatic, earning it the moniker 'the silent killer', as its effects can go unnoticed until it leads to severe complications. Blood pressure, measured in millimeters of mercury (mmHg), involves two values: systolic pressure (during heartbeats) over diastolic pressure (when the heart is at rest). Lifestyle factors such as an unhealthy diet high in sodium, sedentary behavior, and obesity, along with genetic predispositions, contribute to its development. If left unmanaged, hypertension can lead to serious complications, including heart disease, stroke, and kidney issues. Regular blood pressure monitoring, adoption of a healthy lifestyle, and, if necessary, medical intervention are crucial components of hypertension management. Lifestyle modifications, such as maintaining a balanced diet, engaging in regular physical activity, managing stress, and avoiding tobacco and excessive alcohol consumption, play a pivotal role in preventing and controlling hypertension, underscoring the importance of proactive health practices.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>
+                           <h2>Dietary Changes:</h2>
+                           <p>
+                             <h3>Reduce Sodium Intake:</h3> Limiting salt intake can help lower blood pressure. Avoid processed foods and try using herbs and spices for flavoring.
+                           </p>
+                           <p>
+                             <h3>Increase Potassium-Rich Foods:</h3> Potassium helps balance sodium levels. Include bananas, oranges, spinach, and potatoes in your diet.
+                           </p>
+                           
+                           <h2>Healthy Eating:</h2>
+                           <p>
+                             <h3>Adopt the DASH Diet:</h3> The Dietary Approaches to Stop Hypertension (DASH) diet emphasizes fruits, vegetables, whole grains, lean proteins, and low-fat dairy products.
+                           </p>
+                           <p>
+                             <h3>Garlic:</h3> Some studies suggest that garlic may have a modest effect on blood pressure. Adding fresh garlic to your meals or taking garlic supplements under medical guidance may be considered.
+                           </p>
+                           
+                           <h2>Regular Physical Activity:</h2>
+                           <p>
+                             <h3>Exercise Regularly:</h3> Engage in aerobic exercises like brisk walking, jogging, swimming, or cycling. Aim for at least 150 minutes of moderate-intensity exercise per week.
+                           </p>`;
+    }
+    else if (res.innerHTML === "[2]") {
+      res.innerHTML = "g.e.r.d";
+      content.innerHTML = `<p>Gastroesophageal Reflux Disease (GERD) is a chronic digestive disorder characterized by the abnormal flow of stomach acid into the esophagus, causing irritation and inflammation. Commonly referred to as acid reflux, GERD occurs when the lower esophageal sphincter, a muscular ring separating the stomach and the esophagus, weakens or relaxes inappropriately. This condition leads to symptoms such as heartburn, regurgitation, chest pain, and difficulty swallowing. GERD can have a significant impact on one's quality of life, potentially leading to complications like esophagitis, Barrett's esophagus, and an increased risk of esophageal cancer. Lifestyle modifications, such as dietary changes, weight management, and elevating the head during sleep, are often recommended as initial treatments. Medications and, in severe cases, surgical interventions may be employed to manage symptoms and prevent long-term complications. Regular consultation with a healthcare professional is crucial for an accurate diagnosis and tailored treatment plan for individuals experiencing symptoms of GERD.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>
+                           <h2>Dietary Modifications:</h2>
+                           <p>
+                             <h3>Avoid Trigger Foods:</h3> Identify and limit or avoid foods that trigger acid reflux, such as citrus fruits, tomatoes, spicy foods, chocolate, and caffeine.
+                           </p>
+                           <p>
+                             <h3>Smaller, More Frequent Meals:</h3> Instead of large meals, opt for smaller, more frequent ones to reduce pressure on the lower esophageal sphincter.
+                           </p>
+                           
+                           <h2>Lifestyle Changes:</h2>
+                           <p>
+                             <h3>Maintain a Healthy Weight:</h3> Excess weight can contribute to GERD symptoms. Losing weight through a balanced diet and regular exercise may help alleviate symptoms.
+                           </p>
+                           <p>
+                             <h3>Elevate the Head of the Bed:</h3> Elevating the head of the bed by 6-8 inches may reduce nighttime reflux symptoms.
+                           </p>
+                           
+                           <h2>Herbal Remedies:</h2>
+                           <p>
+                             <h3>Chamomile Tea:</h3> Chamomile has anti-inflammatory properties and may help soothe the digestive tract. Drinking chamomile tea before bedtime may provide relief.
+                           </p>
+                           <p>
+                             <h3>Ginger:</h3> Ginger is known for its anti-inflammatory properties. Consuming ginger tea or adding ginger to meals in moderation might be beneficial.
+                           </p>
+                           
+                           <h2>Lifestyle Practices:</h2>
+                           <p>
+                             <h3>Avoid Late-night Eating:</h3> Refrain from eating large meals close to bedtime to minimize the risk of nighttime reflux.
+                           </p>`;
+    }
+    else if (res.innerHTML === "[3]") {
+      res.innerHTML = "gastroenteritis";
+      content.innerHTML = `<p>Gastroenteritis, commonly known as the stomach flu, is an inflammation of the gastrointestinal tract characterized by symptoms such as diarrhea, vomiting, abdominal cramps, and sometimes fever. Most often caused by viral infections, such as norovirus or rotavirus, or bacterial pathogens like Salmonella or Escherichia coli (E. coli), gastroenteritis is highly contagious and can spread through contaminated food, water, or direct person-to-person contact. While typically a self-limiting condition that resolves within a few days with rest and proper hydration, severe cases may require medical attention, especially in vulnerable populations such as young children, the elderly, or individuals with weakened immune systems. Preventive measures include practicing good hygiene, such as thorough handwashing, ensuring food safety, and staying hydrated, while treatment focuses on symptom relief and managing complications in more severe cases. It's important for individuals experiencing persistent symptoms or signs of dehydration to seek medical advice promptly, as proper care can help mitigate the impact of this common and often uncomfortable gastrointestinal ailment.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>
+                           <h2>Hydration:</h2>
+                           <p>
+                             Replenishing fluids is essential to prevent dehydration caused by diarrhea and vomiting. Drink clear fluids like water, electrolyte solutions, or clear broths. Small, frequent sips are often better tolerated than large amounts at once.
+                           </p>
+                           
+                           <h2>BRAT Diet:</h2>
+                           <p>
+                             The BRAT diet, consisting of bananas, rice, applesauce, and toast, may be easier on the digestive system. These foods are bland and can help firm up stools.
+                           </p>
+                           
+                           <h2>Probiotics:</h2>
+                           <p>
+                             Probiotics, found in yogurt or supplements, may aid in restoring the balance of beneficial bacteria in the gut. They could potentially shorten the duration of symptoms.
+                           </p>
+                           
+                           <h2>Ginger:</h2>
+                           <p>
+                             Ginger has anti-nausea properties and can help soothe an upset stomach. You can consume ginger tea or ginger ale (non-caffeinated and non-carbonated) in moderation.
+                           </p>
+                           
+                           <h2>Peppermint Oil:</h2>
+                           <p>
+                             Peppermint oil may help relieve symptoms such as abdominal pain and bloating. Use caution and consult with a healthcare professional before using essential oils, especially for children.
+                           </p>`;
+    }
+    else if (res.innerHTML === "[4]") {
+      res.innerHTML = "jaundice";
+      content.innerHTML = `<p>Jaundice is a medical condition characterized by the yellowing of the skin, eyes, and mucous membranes due to elevated levels of bilirubin in the blood. Bilirubin, a yellow pigment produced during the breakdown of red blood cells, is typically processed by the liver and excreted in bile. Jaundice occurs when there is an issue with the liver's ability to process bilirubin, or when there is an excessive breakdown of red blood cells. This condition may result from various underlying causes, including liver diseases, hepatitis, hemolytic anemia, or obstruction of the bile ducts. Symptoms may include yellow discoloration, dark urine, pale stools, and abdominal pain. Treatment depends on the underlying cause and may involve addressing liver dysfunction, managing infections, or removing obstructions. Prompt medical attention is essential for diagnosing and treating the specific cause of jaundice and preventing potential complications. Regular check-ups, vaccinations for hepatitis, and adopting a healthy lifestyle are essential preventive measures to minimize the risk of jaundice.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>
+                           <h2>Hydration:</h2>
+                           <p>
+                             Ensure proper hydration by drinking an adequate amount of water throughout the day. Hydration supports the liver in flushing out toxins.
+                           </p>
+                           
+                           <h2>Healthy Diet:</h2>
+                           <p>
+                             Consume a well-balanced, nutritious diet rich in fruits, vegetables, whole grains, and lean proteins. Avoid processed foods, excessive fats, and sugars.
+                           </p>
+                           
+                           <h2>Herbal Teas:</h2>
+                           <p>
+                             Some herbal teas, such as dandelion tea or ginger tea, are believed to have liver-protective properties. Consult with a healthcare professional before adding herbal supplements to your routine.
+                           </p>
+                           
+                           <h2>Turmeric:</h2>
+                           <p>
+                             Turmeric contains curcumin, which has anti-inflammatory and antioxidant properties. Adding turmeric to your meals or taking it as a supplement may be considered, but consult with a healthcare provider first.
+                           </p>
+                           
+                           <h2>Avoid Alcohol:</h2>
+                           <p>
+                             Limit or eliminate alcohol consumption, as excessive alcohol can contribute to liver damage.
+                           </p>`;
+    }
+    else if (res.innerHTML === "[5]") {
+      res.innerHTML = "malaria";
+      content.innerHTML = `<p>Malaria, a mosquito-borne infectious disease, continues to be a significant global health concern, particularly in tropical and subtropical regions. Caused by the Plasmodium parasite and transmitted through the bites of infected female Anopheles mosquitoes, malaria annually affects millions of people, causing a substantial burden on healthcare systems. The disease manifests with symptoms such as fever, chills, and flu-like symptoms, with severe cases leading to complications such as anemia, organ failure, and death, particularly in vulnerable populations like children and pregnant women. Prevention strategies primarily involve vector control measures, including bed nets treated with insecticides and indoor residual spraying. Additionally, antimalarial medications are crucial for both treatment and prophylaxis. Despite progress in reducing malaria incidence in some regions, challenges such as drug resistance, inadequate healthcare infrastructure, and climate change pose ongoing obstacles to global efforts in eradicating this life-threatening disease.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>
+                           <h2>Stay Hydrated:</h2>
+                           <p>Drinking plenty of fluids, such as water and electrolyte-rich solutions, helps prevent dehydration, especially if experiencing fever and sweating.</p>
+                               
+                           <h2>Rest:</h2>
+                           <p>Adequate rest is crucial for the body to recover. Ensure plenty of sleep and avoid overexertion.</p>
+                               
+                           <h2>Fever-Reducing Measures:</h2>
+                           <p>Sponge baths with lukewarm water can help reduce fever. Applying a damp cloth to the forehead can also provide relief.</p>
+                               
+                           <h2>Herbal Teas:</h2>
+                           <p>Certain herbal teas, like ginger or chamomile, may help soothe symptoms. Ensure they are safe and do not interfere with any prescribed medications.</p>
+                               
+                           <h2>Quinine-Rich Foods:</h2>
+                           <p>Foods containing natural quinine, such as tonic water or cinchona bark tea, have been traditionally used to alleviate malaria symptoms. However, the effectiveness is limited, and quinine has potential side effects.</p>`;
+    }
+    else if (res.innerHTML === "[6]") {
+      res.innerHTML = "dengue";
+      content.innerHTML = `<p>Dengue, a mosquito-borne viral infection, poses a significant global health threat, particularly in tropical and subtropical regions. Transmitted primarily by the Aedes aegypti mosquito, the virus causes a spectrum of symptoms ranging from mild fever, severe headaches, and joint pain to life-threatening complications such as hemorrhagic fever and shock syndrome. With an estimated 390 million infections annually, dengue has become a leading cause of illness and death in many countries. Prevention efforts center around mosquito control measures, including eliminating breeding sites and using insect repellents. There is no specific antiviral treatment for dengue, emphasizing the importance of early detection, supportive care, and fluid management to reduce mortality rates. The complex interplay of environmental, viral, and human factors makes dengue a challenging public health concern, necessitating collaborative efforts in research, prevention, and medical interventions to mitigate its impact on communities worldwide.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>                     
+                           <h2>Stay Hydrated:</h2>
+                           <p>Dengue can cause dehydration, so it's crucial to drink plenty of fluids such as water, coconut water, and oral rehydration solutions to maintain electrolyte balance.</p>
+ 
+                           <h2>Papaya Leaf Juice:</h2>
+                           <p>Some traditional practices suggest that papaya leaf juice may help increase platelet count, which tends to drop during dengue. However, more research is needed, and individuals should consult with a healthcare professional.</p>
+ 
+                           <h2>Barley Water:</h2>
+                           <p>Barley water is known for its cooling effect and may help reduce fever. Boil barley in water, strain, and drink the water throughout the day.</p>
+ 
+                           <h2>Neem Leaves:</h2>
+                           <p>Neem leaves are believed to have antiviral properties. Boiling neem leaves and drinking the water might be considered, but it's essential to consult with a healthcare provider.</p>
+ 
+                           <h2>Tulsi (Holy Basil):</h2>
+                           <p>Tulsi leaves are known for their immune-boosting properties. Chewing fresh tulsi leaves or drinking tulsi tea may provide relief.</p>`;
+    }
+    else if (res.innerHTML === "[7]") {
+      res.innerHTML = "typhoid";
+      content.innerHTML = `<p>Typhoid fever, caused by the bacterium Salmonella enterica serotype Typhi, is a systemic and potentially life-threatening infectious disease that remains a significant global health concern. It is primarily transmitted through contaminated food and water, posing a higher risk in areas with inadequate sanitation and hygiene. The hallmark symptoms include sustained high fever, abdominal pain, headache, and gastrointestinal disturbances. Typhoid can lead to severe complications, such as intestinal perforation, if left untreated. Diagnosing the disease often involves blood or stool tests to identify the presence of the bacteria. Prevention is crucial and relies on improved sanitation, access to clean water, and vaccination. The development of antibiotic resistance poses challenges in treatment, emphasizing the importance of responsible antibiotic use. Typhoid's impact is particularly pronounced in developing regions, highlighting the urgent need for comprehensive public health measures to mitigate its spread and impact on vulnerable populations.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>                     
+                           <h2>Hydration:</h2>
+                           <p>Typhoid fever can lead to dehydration due to persistent fever and gastrointestinal symptoms. Ensure adequate fluid intake, including water, oral rehydration solutions, and clear soups, to maintain hydration levels.</p>
+                               
+                           <h2>Rest:</h2>
+                           <p>Allow the body to rest and recover. Bed rest can help conserve energy and support the immune system in fighting the infection.</p>
+                               
+                           <h2>Nutrient-Rich Diet:</h2>
+                           <p>Despite a reduced appetite, try to consume easily digestible and nutrient-rich foods. Include broths, plain rice, boiled vegetables, and small portions of easily digestible proteins.</p>
+                               
+                           <h2>Herbal Teas:</h2>
+                           <p>Ginger tea and peppermint tea may provide relief from nausea and abdominal discomfort. These can be soothing and might help improve overall well-being.</p>
+                               
+                           <h2>Probiotics:</h2>
+                           <p>Introduce probiotic-rich foods, such as yogurt with live cultures, to support gut health. Probiotics may aid in restoring the balance of beneficial bacteria in the digestive system.</p>`;
+    }
+    else if (res.innerHTML === "[8]") {
+      res.innerHTML = "urinary tract infection";
+      content.innerHTML = `<p>Urinary tract infection (UTI) is a common bacterial infection affecting any part of the urinary system, including the kidneys, bladder, ureters, and urethra. Typically caused by bacteria, most commonly Escherichia coli (E. coli), UTIs manifest with symptoms such as frequent and painful urination, a persistent urge to urinate, cloudy or strong-smelling urine, and lower abdominal discomfort. While UTIs can affect anyone, they are more prevalent in women due to the shorter length of the urethra. Factors such as sexual activity, pregnancy, and menopause may contribute to increased susceptibility. UTIs are usually treated with antibiotics, and preventive measures include staying hydrated, practicing good hygiene, and promptly emptying the bladder. Untreated UTIs can lead to more severe complications, emphasizing the importance of timely diagnosis and appropriate medical intervention.</p>
+                           <h2 style="text-align: center; font-size:2.2rem"><strong>Remedies</strong></h2>                     
+                           <h2>Hydration:</h2>
+                           <p>Drink plenty of water to help flush bacteria out of the urinary tract. Adequate hydration is essential for overall urinary health.</p>
+                               
+                           <h2>Cranberry Juice:</h2>
+                           <p>Some studies suggest that cranberry juice may help prevent the adherence of bacteria to the urinary tract walls. Opt for unsweetened, pure cranberry juice, and consult with a healthcare provider, especially if you have diabetes.</p>
+                               
+                           <h2>Probiotics:</h2>
+                           <p>Probiotics, found in yogurt and supplements, may promote a healthy balance of bacteria in the body, potentially aiding in the prevention of UTIs.</p>
+                               
+                           <h2>Heat Therapy:</h2>
+                           <p>Applying a heating pad to the lower abdomen may help alleviate pain and discomfort associated with UTIs.</p>
+                               
+                           <h2>Avoid Irritants:</h2>
+                           <p>Stay away from potential irritants, such as caffeine, alcohol, spicy foods, and nicotine, which can aggravate UTI symptoms.</p>
+                               
+                           <h2>Vitamin C:</h2>
+                           <p>Foods rich in vitamin C, like citrus fruits, may acidify the urine, creating an environment less conducive to bacterial growth.</p>`;
+    };
+const predict = document.selectElementById("predict");
+predict.addEventListner("click", (e) => {
+  e.preventDefault();
+})
+
+  </script>
+  <!-- <div id="output">
+        {% if label %}
+        <h1> {{label}}</h1>
+        {% endif %}
+    </div>  -->
+</body>
+
+</html>
