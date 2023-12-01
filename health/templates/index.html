@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsunami Health Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap');
+
+*{
+  margin:0;
+  padding: 0;
+  box-sizing:border-box;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  font-variant: small-caps;
+}
+
+header {
+  /* border:1px solid red; */
+  padding:8px;
+  height:60vh;
+  color:white;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgb(8, 6, 6, 0.3);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.769), rgba(255,255,255,0.665));
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header::before {
+  /* border:2px solid blue; */
+  content:"";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  background:url("tsunamibg.jpg");
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  z-index:-1;
+}
+
+h1 {
+  /* border: 1px solid red; */
+  border-radius: 20px;
+  padding-left: 10px;
+  font-size: 4.5rem;
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+}
+
+p {
+  /* border: 1px solid red; */
+  padding-left: 10px;
+  border-radius: 20px;
+  width:50%;
+  font-size: 1.4rem;
+  font-variant: small-caps;
+  letter-spacing: 1px;
+}
+
+.container {
+  background-color: #ffffff75;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 20px;
+}
+
+/* symptom dropdown */
+label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+select {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background:#ece9e9;
+  margin-top: 8px;
+  padding: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* results */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.result {
+  display: none;
+}
+
+/*disease, rem */
+#disease,
+#remedy {
+  color: #007BFF;
+  font-weight: bold;
+}
+
+/* select options */
+select option {
+  font-weight: normal;
+}
+
+.container button{
+  margin-top:10px;
+  padding:15px 35px;
+  border:none;
+  box-shadow: 2px 2px 5px black;
+  font-variant: small-caps;
+  font-weight: 700;
+  font-size: 1rem;
+  background:#ece9e9;
+  border-radius: 25px;
+  transition: color, background, box-shadow, 0.5s;
+}
+.container button:hover{
+  color:white;
+  background:#000;
+}
+</style>
+<body>
+    <header>
+        <h1>Health Predictor</h1>
+        <p>Stay prepared and get quick health check during tsunami with our health-predictor. Just select your symptoms from our dropdown menus and get instant predictions for potential diseases as well as recommended remedies. </p>
+    </header>
+    <form action="/predict" method="POST">
+    <div class="container">
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom1">Symptom 1:</label>
+            <select id="symptom1" onchange="handleSymptomChange('symptom1', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom2">Symptom 2:</label>
+            <select id="symptom2" onchange="handleSymptomChange('symptom2', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom3">Symptom 3:</label>
+            <select id="symptom3" onchange="handleSymptomChange('symptom3', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom4">Symptom 4:</label>
+            <select id="symptom4" onchange="handleSymptomChange('symptom4', this.value)"></select>
+        </div>
+
+        <!-- Repeat this block for each symptom dropdown -->
+        <div class="symptom-dropdown">
+            <label for="symptom5">Symptom 5:</label>
+            <select id="symptom5" onchange="handleSymptomChange('symptom5', this.value)"></select>
+        </div>
+
+        <div class="result">
+            <h2>Predicted Disease:</h2>
+            <p id="disease"></p>
+            <h2>Home Remedy:</h2>
+            <p id="remedy"></p>
+        </div>
+        <button id="predict">Predict Disease</button>
+    </div>
+    <div style = "display: none;">
+    <input type="text" id="1" name="1" value="0">
+    <input type="text" id="2" name="2" value="0">
+    <input type="text" id="3" name="3" value="0">
+    <input type="text" id="4" name="4" value="0">
+    <input type="text" id="5" name="5" value="0">
+  </div>
+</form>
+    <script src="script.js"></script>
+    <script>
+        let symptoms = ['back_pain','constipation','abdominal_pain','diarrhoea','mild_fever','yellow_urine',
+'yellowing_of_eyes','acute_liver_failure','fluid_overload','swelling_of_stomach',
+'swelled_lymph_nodes','malaise','blurred_and_distorted_vision','phlegm','throat_irritation',
+'redness_of_eyes','sinus_pressure','runny_nose','congestion','chest_pain','weakness_in_limbs',
+'fast_heart_rate','pain_during_bowel_movements','pain_in_anal_region','bloody_stool',
+'irritation_in_anus','neck_pain','dizziness','cramps','bruising','obesity','swollen_legs',
+'swollen_blood_vessels','puffy_face_and_eyes','enlarged_thyroid','brittle_nails',
+'swollen_extremeties','excessive_hunger','extra_marital_contacts','drying_and_tingling_lips',
+'slurred_speech','knee_pain','hip_joint_pain','muscle_weakness','stiff_neck','swelling_joints',
+'movement_stiffness','spinning_movements','loss_of_balance','unsteadiness',
+'weakness_of_one_body_side','loss_of_smell','bladder_discomfort','foul_smell_of urine',
+'continuous_feel_of_urine','passage_of_gases','internal_itching','toxic_look_(typhos)',
+'depression','irritability','muscle_pain','altered_sensorium','red_spots_over_body','belly_pain',
+'abnormal_menstruation','dischromic _patches','watering_from_eyes','increased_appetite','polyuria','family_history','mucoid_sputum',
+'rusty_sputum','lack_of_concentration','visual_disturbances','receiving_blood_transfusion',
+'receiving_unsterile_injections','coma','stomach_bleeding','distention_of_abdomen',
+'history_of_alcohol_consumption','fluid_overload','blood_in_sputum','prominent_veins_on_calf',
+'palpitations','painful_walking','pus_filled_pimples','blackheads','scurring','skin_peeling',
+'silver_like_dusting','small_dents_in_nails','inflammatory_nails','blister','red_sore_around_nose',
+'yellow_crust_ooze'];
+ const state = {
+    symptom1: 0,
+    symptom2: 0,
+    symptom3: 0,
+    symptom4: 0,
+    symptom5: 0,
+    disease: '',
+    remedy: '',
+};
+
+const handleSymptomChange = (symptomName, value) => {
+    state[symptomName] = value;
+    // alert(symptomName);
+    // alert(value);
+    document.getElementById(symptomName[7]).setAttribute("value", `${value}`);
+    document.getElementById(symptomName[7]).value = value;
+};
+
+// const predictDisease = () => {
+//     // Collect symptom data
+
+//     const symptomData = {
+//         symptom1: state.symptom1,
+//         symptom2: state.symptom2,
+//         symptom3: state.symptom3,
+//         symptom4: state.symptom4,
+//         symptom5: state.symptom5,
+//     };
+//     const jsonString = JSON.stringify(symptomData);
+//     const btn = document.getElementById(predeict);
+//     btn.addEventListener('click', () => {
+//         const options = {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: jsonString,
+//           };
+//         fetch('http://localhost/', options)
+//     })
+//     // Simulate the response from the backend API
+//     // In a real application, you would use AJAX or fetch to send a request to the server
+//     const response = {
+//         data: {
+//             disease: 'Predicted Disease',
+//             remedy: 'Home Remedy',
+//         },
+//     };
+
+//     const { disease, remedy } = response.data;
+//     state.disease = disease;
+//     state.remedy = remedy;
+
+//     // Update the HTML elements
+//     document.getElementById('disease').textContent = disease;
+//     document.getElementById('remedy').textContent = remedy;
+// };
+
+// Function to generate options dynamically
+function generateOptions(count, selectId) {
+    const selectElement = document.getElementById(selectId);
+    for (let i = 0; i < count; i++) {
+        const option = document.createElement('option');
+        option.value = `${i}`;
+        option.textContent = `${symptoms[i]}`;
+        selectElement.appendChild(option);
+    }
+}
+
+// Call the generateOptions function for each select tag
+generateOptions(95, 'symptom1');
+generateOptions(95, 'symptom2');
+generateOptions(95, 'symptom3');
+generateOptions(95, 'symptom4');
+generateOptions(95, 'symptom5');
+    </script>
+    <div id="output">
+        {% if label %}
+        <h1> {{label}}</h1>
+        {% endif %}
+    </div> 
+</body>
+
+</html>

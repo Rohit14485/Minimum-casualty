@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<style>
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    width: 300px;
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: .5em;
+    margin-bottom: .5em;
+    border: 1px solid #CCC;
+    border-radius: .25em;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: .5em;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: .25em;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+</style>
+<html>
+    <body>
+        <form action="/chat" method="POST">
+            First name: <input type="text" name="fname"><br>
+            <!-- Last name: <input type="text" name="lname"><br> -->
+           <button type="submit"><a href="http://localhost:8080/">Send to backend</a></button>
+          </form>
+          <script>
+            const d = new Date();
+         var n = getElementById("fname");
+        localStorage.setItem("name", n);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Your existing head content here -->
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Add CSS for the button */
+      /* Style for the button */
+      #showNearbyMarkers {
+        position: absolute;
+        top: 90vh;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #4caf50; /* Green background */
+        border: none; /* No border */
+        color: white; /* White text */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s; /* Transition effect */
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: 1;
+      }
+
+      #showNearbyMarkers:hover {
+        background-color: #45a049; /* Darker green when you hover over it */
+      }
+
+      /* Style for the Mapbox Directions control */
+      .mapboxgl-ctrl-directions {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.9
+        ); /* Semi-transparent white background */
+        border-radius: 0px; /* No rounded corners */
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
+        font-family: "Roboto", sans-serif; /* Google Maps uses the Roboto font */
+        color: #333; /* Dark grey text color */
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 0;
+      }
+
+      #showNearMarkers {
+        position: absolute;
+        top: 82vh;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: rgb(64, 64, 144); /* Green background */
+        border: none; /* No border */
+        color: white; /* White text */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s; /* Transition effect */
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: 1;
+      }
+
+      #showNearMarkers:hover {
+        background-color: #0056a9;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="showNearbyMarkers">Show Nearby Safezone</button>
+    <button id="showNearMarkers">Show Nearest Safezone</button>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYWRlc2gxMjI2IiwiYSI6ImNsb2s2YzRqcDI0N3Mya3BsOXUzdGQ2YXkifQ.rRL-cGdC7uw-6IMQczNjrA";
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/dark-v11",
+        center: [77.23, 28.61],
+        zoom: 9,
+      });
+
+      const Places = [
+        {
+          name: "DLF Promenade",
+          LngLat: [77.1565, 28.5431],
+          capacity: 0,
+          capacityLimit: 5,
+          csvFile: "log.csv",
+        },
+        {
+          name: "DLF Mall of India",
+          LngLat: [77.3206, 28.5672],
+          capacity: 0,
+          capacityLimit: 5,
+          csvFile: "log.csv",
+        },
+        {
+          name: "City Square Mall",
+          LngLat: [77.1216, 28.6519],
+          capacity: 0,
+          capacityLimit: 5,
+          csvFile: "log.csv",
+        },
+
+        // {
+        //   name: "Lincoln Memorial",
+        //   LngLat: [77.36483888109785, 28.52088486693205],
+        //   color: "blue",
+        // },
+        // {
+        //   name: "Korean War Veterans Memorial",
+        //   LngLat: [88.37, 22.5675],
+        // },
+      ];
+
+      Places.forEach((place) => {
+        Papa.parse(place.csvFile, {
+          download: true,
+          header: true,
+          complete: function (results) {
+            const row = results.data[0];
+            // console.log(row);
+            // console.log(place.name);
+            if (row && row.TotalInside) {
+              place.capacity = parseInt(row.TotalInside, 10);
+              console.log(place.name);
+              console.log(place.capacity);
+              // Update the capacity
+            }
+            // if(row&& row.CapacityLimit){
+            //   place.capacityLimit = parseInt(row.CapacityLimit, 10);
+            //   console.log(place.capacityLimit);
+            // }
+          },
+        });
+      });
+
+      //
+      function calculateDistance(coord1, coord2) {
+        const R = 6371e3; // metres
+        const x = (coord1[1] * Math.PI) / 180; // φ, λ in radians
+        const y = (coord2[1] * Math.PI) / 180;
+        const z = ((coord2[1] - coord1[1]) * Math.PI) / 180;
+        const z1 = ((coord2[0] - coord1[0]) * Math.PI) / 180;
+
+        const a =
+          Math.sin(z / 2) * Math.sin(z / 2) +
+          Math.cos(x) * Math.cos(y) * Math.sin(z1 / 2) * Math.sin(z1 / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // in metres
+      }
+      // Define a function to show nearby markers within a 10km range
+      function showNearbyMarkers() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            const userLocation = [
+              position.coords.longitude,
+              position.coords.latitude,
+            ];
+
+            // Clear existing markers
+            document
+              .querySelectorAll(".marker")
+              .forEach((markerElement) => markerElement.remove());
+
+            // Filter and display markers within a 10km range
+            Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
+              console.log("Capacity: " + capacity);
+              console.log("Capacity Limit: " + capacityLimit);
+
+              if (LngLat && capacity <= capacityLimit) {
+                // Check the capacity here
+                const distance = calculateDistance(userLocation, LngLat);
+
+                if (distance <= 50000) {
+                  const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+                    `${name} (CapacityLimit: ${capacityLimit})` // Include the capacity in the popup text
+                  );
+                  const marker = new mapboxgl.Marker({ scale: 1 })
+                    .setLngLat(LngLat)
+                    .setPopup(popup)
+                    .addTo(map)
+                    .getElement();
+                  marker.classList.add("marker");
+                  console.log("Marker Added: " + name);
+                }
+
+                map.flyTo({
+                  zoom: 11, // Adjust the zoom level as needed
+                  essential: true, // This ensures a smooth animation
+                });
+                console.log(
+                  "Distance to " + name + ": " + distance + " meters"
+                );
+              }
+            });
+          });
+        } else {
+          alert("Geolocation is not available in your browser.");
+        }
+      }
+
+      document
+        .getElementById("showNearbyMarkers")
+        .addEventListener("click", showNearbyMarkers);
+
+      // Your existing map controls here
+
+      function showNearestMarker() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            const userLocation = [
+              position.coords.longitude,
+              position.coords.latitude,
+            ];
+
+            let nearestMarker = null;
+            let nearestDistance = Infinity;
+
+            // Find the nearest marker
+            Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
+              console.log("Capacity: " + capacity);
+              console.log("Capacity Limit: " + capacityLimit);
+
+              if (LngLat && capacity <= capacityLimit) {
+                const distance = calculateDistance(userLocation, LngLat);
+
+                if (distance < nearestDistance) {
+                  nearestDistance = distance;
+                  nearestMarker = { name, LngLat, capacityLimit };
+                }
+              }
+            });
+
+            // Clear existing markers
+            document
+              .querySelectorAll(".marker")
+              .forEach((markerElement) => markerElement.remove());
+
+            // Display the nearest marker
+            if (nearestMarker) {
+              const { name, LngLat, capacityLimit } = nearestMarker;
+
+              const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+                `${name} (CapacityLimit: ${capacityLimit})`
+              ); // Include the capacity in the popup text
+              const marker = new mapboxgl.Marker({ scale: 1 })
+                .setLngLat(LngLat)
+                .setPopup(popup)
+                .addTo(map)
+                .getElement();
+              marker.classList.add("marker");
+              console.log("Nearest Marker Added: " + name);
+
+              map.flyTo({
+                center: LngLat,
+                zoom: 12, // Adjust the zoom level as needed
+                essential: true, // This ensures a smooth animation
+              });
+
+              directions.setOrigin([
+                position.coords.longitude,
+                position.coords.latitude,
+              ]);
+              directions.setDestination(LngLat);
+            }
+          });
+        } else {
+          alert("Geolocation is not available in your browser.");
+        }
+      }
+
+      document
+        .getElementById("showNearMarkers")
+        .addEventListener("click", showNearestMarker);
+
+      map.on("load", function () {
+        map.addControl(
+          new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+          }),
+          "bottom-left"
+        );
+      });
+
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true,
+          },
+          trackUserLocation: true,
+          showUserHeading: true,
+        })
+      );
+    </script>
+  </body>
+</html>
