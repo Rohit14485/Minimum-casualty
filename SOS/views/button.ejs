@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<style>
+    
+    body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.button1 {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 32px 30px;
+    text-align: center;
+    font-size: 20px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.button1:hover {
+    opacity: 1;
+    background-color: #ff0000;
+}
+
+.button1:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+    }
+
+    #stop {
+        opacity: 1;
+        animation-name: example;
+        animation-duration: 1s;
+        animation-iteration-count: 10;
+    }
+
+    @keyframes example {
+        from {
+            background-color: red;
+        }
+
+        to {
+            background-color: rgb(112, 0, 0);
+        }
+    }
+</style>
+
+<body>
+    <div >
+    <button class="button1" id="sos" onclick="myFunction()">SOS</button>
+    <audio id="sosAudio" controls style="display: none;">
+        <source src="sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+      <!-- <embed src="sound.mp3" autostart="false" width="0" height="0" id="audioPlayer" enablejavascript="true"> -->
+
+    <p id="countdown"></p>
+    <div>
+        <button class="button1" id="stop" onclick="myStopFunction()" style="display: none;">Stop SOS</button>
+    </div>
+    <form id ="form" method="post" action="/message" style="display: none;" >
+<input id="lon" type="text" name="lon" value = "0">
+<input id ="lat" type="text" name="lat" value = "0">
+    </form>
+</div>
+    <script>
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+}
+
+function showPosition(position) {
+    document.getElementById("lon").setAttribute("value", position.coords.longitude);
+    document.getElementById("lon").value = position.coords.longitude;
+    document.getElementById("lat").setAttribute("value", position.coords.latitude);
+    document.getElementById("lat").value = position.coords.latitude;
+    document.getElementById("form").submit();
+}
+
+
+
+
+        let time = 10;
+        let bool = false;
+        function myStopFunction() {
+            time = 10;
+            var x = document.getElementById("stop");
+            x.style.display = "none";
+            var y = document.getElementById("sos");
+            y.style.display = "block";
+            bool = true;
+        }
+        function myFunction() {
+            event.target.style.display = "none";
+            var x = document.getElementById("stop");
+            x.style.display = "block";
+            document.getElementById('sosAudio').play();
+
+            const loop = setInterval(function () {
+                let t = time - 2;
+                document.getElementById("countdown").innerHTML = "Cancel SOS in : " + t + " seconds";
+                time--;
+                if (time == 0) {
+                    clearInterval(loop);
+                    alert("SOS sent");
+                    document.getElementById("countdown").innerHTML = "";
+                    bool = false;
+                    getLocation();
+
+                }
+                if (bool) {
+                    var audio = document.getElementById("sosAudio");
+                    audio.pause();
+                      audio.currentTime = 0;
+                    document.getElementById("countdown").innerHTML = "";
+                    
+                    clearInterval(loop);
+                    bool = false;
+                }
+            }, 1000);
+
+        }
+
+
+     
+    </script>
+
+</body>
+
+</html>

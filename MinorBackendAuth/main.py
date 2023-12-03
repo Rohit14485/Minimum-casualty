@@ -258,8 +258,8 @@ def run():
 		if key == ord("q"):
 			break
 
-		okk=totalUp-totalDown
-	
+		okk=abs(totalUp-totalDown)
+
 		
 		sss=['cap']
 		rows = [okk]

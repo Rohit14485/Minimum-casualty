@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EvacSafe</title>
+    
     <link
-    href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+    href="use your own mapbox token"
     rel="stylesheet"
   />
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
@@ -60,7 +61,8 @@ nav{
     /* border:1px solid red; */
     font-size: 3em;
     font-weight: 900;
-    color:rgb(246, 161, 15);
+    color:white;
+    text-shadow:8px 5px 5px rgba(7,95,230,255);
 }
 .hover-links{
   transition-property: color;
@@ -70,7 +72,7 @@ nav{
   color:white;
 }
 .hover-links:hover{
-  color:rgb(246, 161, 15);
+  color:rgba(7,95,230,255);
 }
 .flex{
   /* border:1px solid black; */
@@ -278,7 +280,7 @@ p {
     <nav>
         <div class="navbar">
             <div class="logo">
-                <h1>EvacSafe</h1>
+                <h1>Rapid</h1>
             </div>
             <div class="nav-links">
                 <ul class="flex">
@@ -291,14 +293,14 @@ p {
     </nav>
     <header>
       <h1>Evac Safe</h1>
-      <p>EvacSafe helps in navigating war victims to safe zones through real-time data. </p>
+      <p>EvacSafe helps in navigating tsunami/war victims to safe zones through real-time data. </p>
     </header>
     
     <section class="hero_section">
 
       <div class="container">
         <h1>Find Safety During War</h1>
-        <p>Navigate to safe zones and watch live feeds, all powered by advanced AI technologies.</p>
+        <p>Navigate to safe zones near you, all powered by advanced AI technologies.</p>
         <button class="btn">Navigate Safe Zone</button>
       </div>
 
@@ -338,69 +340,78 @@ p {
           name: "DLF Promenade",
           LngLat: [77.1565, 28.5431],
           capacity: 0,
-          capacityLimit: 4,
+          capacityLimit: 0,
           csvFile: "DLF_Promenade.csv",
+          areaSqFt:1057572.12
         },
         {
           name: "DLF Mall of India",
           LngLat: [77.3206, 28.5672],
           capacity: 0,
-          capacityLimit: 4,
+          capacityLimit: 0,
           csvFile: "DLF.csv",
+          areaSqFt: 230238.13,
         },
         {
           name: "City Square Mall",
           LngLat: [77.1216, 28.6519],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "City.csv",
+          areaSqFt: 47049.10,
         },
 
         {
           name: "V3S Mall",
           LngLat: [77.2918, 28.6365],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "V3S.csv",
+          areaSqFt: 103710.61,
         },
         {
           name: "Moments Mall",
           LngLat: [77.1457121, 28.6570766],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Moments.csv",
+          areaSqFt: 147467.47,
         },
 
         {
           name: "Metro Walk Mall",
           LngLat: [77.1105641, 28.7249925],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Metro.csv",
+          areaSqFt: 347.66,
         },
 
         {
           name: "Gurmeet's Banquets",
           LngLat: [77.2998785, 28.6574362],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Gurmeet.csv",
+          areaSqFt: 114849.83,
         },
 
         {
           name: "Unity One Mall",
           LngLat: [77.2966171, 28.6607103],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Unity.csv",
+          areaSqFt: 55368.84,
         },
 
         {
           name: "Dlf Emporio",
           LngLat: [77.1523499, 28.5433672],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Dlf_Emporio.csv",
+          areaSqFt: 966424.05 ,
 
         },
 
@@ -408,9 +419,9 @@ p {
           name: "Crown Interiorz Mall",
           LngLat: [77.3043178, 28.4695543],
           capacity: 0,
-          capacityLimit: 5,
+          capacityLimit: 0,
           csvFile: "Crown.csv",
-
+          areaSqFt:98016.13,
         },
 
        
@@ -420,6 +431,7 @@ p {
           capacity: 0,
           capacityLimit: 5,
           csvFile: "Rajiv.csv",
+          areaSqFt: 39503
 
         },
 
@@ -429,6 +441,7 @@ p {
           capacity: 0,
           capacityLimit: 5,
           csvFile: "Kashmere.csv",
+          areaSqFt:118400
 
         },
 
@@ -438,6 +451,7 @@ p {
           capacity: 0,
           capacityLimit: 5,
           csvFile: "Chandni.csv",
+          areaSqFt:9584
 
         },
 
@@ -448,25 +462,20 @@ p {
           capacity: 0,
           capacityLimit: 5,
           csvFile: "Central.csv",
+          areaSqFt:8850
 
         },
 
 
-        {
-          name: "Crown Interiorz Mall",
-          LngLat: [77.3043178, 28.4695543],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Crown.csv",
-
-        },
 
         {
           name:"Hauz Khas Metro Station",
           LngLat:[77.2061,28.5431],
           capacity:0,
           capacityLimit:5,
-          csvFile:"Hauz.csv"
+          csvFile:"Hauz.csv",
+          areaSqFt: 12321
+          
 
         },
 
@@ -475,7 +484,8 @@ p {
           LngLat:[77.2167,28.5866],
           capacity:0,
           capacityLimit:5,
-          csvFile:"Jor.csv"
+          csvFile:"Jor.csv",
+          areaSqFt: 8720
 
         }
 ,
@@ -485,7 +495,8 @@ p {
           LngLat:[77.2274, 28.6009 ],
           capacity:0,
           capacityLimit:5,
-          csvFile:"Khan.csv"
+          csvFile:"Khan.csv",
+          areaSqFt:8982
 
         },
 
@@ -494,12 +505,26 @@ p {
           LngLat:[77.2360,28.5686],
           capacity:0,
           capacityLimit:5,
-          csvFile:"Lajput.csv"
+          csvFile:"Lajput.csv",
+          areaSqFt:10221
 
         },
 
         
       ];
+
+      function updateCapacityLimits(places) {
+  const sqFtPerPerson = 10; // Replace with the actual standard
+  for (let place of places) {
+    if (place.areaSqFt) {
+      place.capacityLimit = Math.floor(0.4*(place.areaSqFt / sqFtPerPerson));
+    }
+  }
+}
+
+updateCapacityLimits(Places);
+
+
 
       Places.forEach((place) => {
         Papa.parse(place.csvFile, {

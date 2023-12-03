@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Upload Section</title>
+
+   <head>  
+    <style>
+         body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .heading {
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .heading h1 {
+        color: #333;
+      }
+      
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      
+      input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+      }
+      
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      
+      #output {
+        text-align: center;
+        font-size: 1.5em;
+        color: #333;
+      }
+
+      #output h1:before {
+  content: "• ";
+}
+
+#output h1 {
+  font-size: 1em;
+  color: #333;
+}
+    </style>
+   
+   </head>
+
+  <body>
+    <div class="heading">
+        <h1>SPAM FILTER</h1>
+        
+
+
+    </div>
+                <form  action="/find" method="POST">
+                <input type="submit" id="submit" value="find" />
+                </form>
+                <form  action="/delete" method="POST">
+                <input type="submit" id="submit" value="delete" />
+                </form>
+
+                <div id="output">
+                    {% if label %}
+                    <h1> {{label}}</h1>
+                    {% endif %}
+                </div> 
+  </body>
+  <script>
+   
+  </script>
+</html>

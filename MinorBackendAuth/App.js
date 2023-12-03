@@ -14,8 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 const bodyParser = require("body-parser");
 const { exec } = require('child_process');
-const accountSid = 'ACd9c91d0369e0d47ec1367e038dc85c2d';
-const authToken = 'eb595969c20290a65a33e9f3b688d4ac';
+const accountSid = '<your twilio account sid>';
+const authToken = '<your twilio auth token>';
+const nodeCmd = require('node-cmd');
 
 
 const morgan = require('morgan');
@@ -131,8 +132,8 @@ app.post("/submit", (req, res) => {
   const station = req.body.locations;
   const video = req.body.video;
   
-
-  let command = `python main.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/${video} --place public/${station}.csv`;
+if(video=="golive"){
+  let command = `python main.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel  --place public/${station}.csv`;
   command = command.replace(' .csv', '.csv'); 
   exec(command, (err, data, stderr) => {
     if (err) {
@@ -141,6 +142,21 @@ app.post("/submit", (req, res) => {
     }
     console.log(data);
   });
+
+}
+
+else{
+ let command = `python main.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/${video} --place public/${station}.csv`;
+  command = command.replace(' .csv', '.csv'); 
+  exec(command, (err, data, stderr) => {
+    if (err) {
+      console.error(`Error: ${err}`);
+      return;
+    }
+    console.log(data);
+  });
+}
+ 
 
 
 });
@@ -154,7 +170,7 @@ app.post('/message', (req,res) => {
 client.messages
 .create({
   body: loc + 'SOS message please send help',
-  from: '+14154831489',
+  from: '+14693363509',
   to: '+919211403344'
 })
 .then((res) => console.log('message sent', res))
@@ -205,4 +221,6 @@ app.get("/tsunami", (req, res) => {
 app.get("/adminVideo", (req, res) => {
   res.render("admin_head");
 });
+
+
 module.exports = app;

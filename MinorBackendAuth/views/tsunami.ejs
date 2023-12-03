@@ -1,247 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EvacSafe</title>
     <link
-    href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
-    rel="stylesheet"
-  />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
-    type="text/css"
-  />
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
-    type="text/css"
-  />
-  <link
-    href="https://fonts.googleapis.com/css?family=Roboto&display=swap"rel="stylesheet"/>
-</head>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap');
+      href="use your own mapbox token"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap");
 
-*{
-  margin:0;
-  padding: 0;
-  box-sizing:border-box;
-}
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
-  /* font-variant: small-caps; */
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Montserrat", sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      /* font-variant: small-caps; */
+    }
 
-nav{
-  padding-inline: 10px;
-  background:#000000 ;
-}
-.navbar{
-  /* margin-inline: 10px; */
-  display:flex;
-  justify-content: space-between;
-  padding-block:10px;
-}
-.logo{
+    nav {
+      padding-inline: 10px;
+      background: #000000;
+    }
+    .navbar {
+      /* margin-inline: 10px; */
+      display: flex;
+      justify-content: space-between;
+      padding-block: 10px;
+    }
+    .logo {
+      /* border:1px solid red; */
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo h1{
   /* border:1px solid red; */
-  display:flex;
-  align-items: center;
-  gap:15px;
-}
-.logo h1{
-    /* border:1px solid red; */
-    font-size: 3em;
-    font-weight: 900;
-    color:rgb(246, 161, 15);
-}
-.hover-links{
-  transition-property: color;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
-  text-decoration: none;
+  font-size: 3em;
+  font-weight: 900;
   color:white;
+  text-shadow:8px 5px 5px rgba(7,95,230,255);
 }
-.hover-links:hover{
-  color:rgb(246, 161, 15);
-}
-.flex{
-  /* border:1px solid black; */
-  display:flex;
-  list-style-type:none;
-  align-items:center;
-  gap:40px;
-}
-.nav-links{
-  /* border: 1px solid red; */
-  display:flex;
-  align-items: center;
-  padding-right: 20px;
-}
-.signin{
-    border:1px solid white;
-    border-radius: 6px;
-    font-weight: 700;
-    color: white !important;
-    padding:12px 24px;
-    transition: 0.3s ease-out;
-}
-.signin:hover{
-    background-color: white; 
-    color: black !important;
-    border:1px solid white;
-}
+    .hover-links {
+      transition-property: color;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-out;
+      text-decoration: none;
+      color: white;
+    }
+    .hover-links:hover {
+      color:  rgba(7,95,230,255);
+    }
+    .flex {
+      /* border:1px solid black; */
+      display: flex;
+      list-style-type: none;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-links {
+      /* border: 1px solid red; */
+      display: flex;
+      align-items: center;
+      padding-right: 20px;
+    }
+    .signin {
+      border: 1px solid white;
+      border-radius: 6px;
+      font-weight: 700;
+      color: white !important;
+      padding: 12px 24px;
+      transition: 0.3s ease-out;
+    }
+    .signin:hover {
+      background-color: white;
+      color: black !important;
+      border: 1px solid white;
+    }
 
+    header {
+      /* border:1px solid red; */
+      padding: 8px;
+      height: 60vh;
+      color: white;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgb(8, 6, 6, 0.3);
+      background: linear-gradient(
+        to top right,
+        rgba(0, 0, 0, 0.699) 30%,
+        rgba(255, 255, 255, 0.428)
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-header {
-  /* border:1px solid red; */
-  padding:8px;
-  height:60vh;
-  color:white;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 6px rgb(8, 6, 6, 0.3);
-  background: linear-gradient(to top right, rgba(0, 0, 0, 0.699) 30%, rgba(255, 255, 255, 0.428));
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-}
+    header::before {
+      /* border:2px solid blue; */
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 60vh;
+      /* background:url("https://d1b3667xvzs6rz.cloudfront.net/2023/10/F9O1JOPb0AANrkS-860x484.jpeg"); */
+      background: url("https://i.ytimg.com/vi/KN65bEIZr4o/maxresdefault.jpg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: -1;
+    }
 
-header::before {
-  /* border:2px solid blue; */
-  content:"";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 60vh;
-  /* background:url("https://d1b3667xvzs6rz.cloudfront.net/2023/10/F9O1JOPb0AANrkS-860x484.jpeg"); */
-  background:url("bombing.jpeg");
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  z-index:-1;
-}
+    h1 {
+      /* border: 1px solid red; */
+      padding-left: 10px;
+      font-size: 4.5rem;
+      font-variant: small-caps;
+      letter-spacing: 1.5px;
+    }
 
-h1 {
-  /* border: 1px solid red; */
-  padding-left: 10px;
-  font-size: 4.5rem;
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
-}
+    p {
+      /* border: 1px solid red; */
+      padding-left: 10px;
+      border-radius: 20px;
+      width: 50%;
+      font-size: 1.4rem;
+      font-variant: small-caps;
+      letter-spacing: 1px;
+    }
 
-p {
-  /* border: 1px solid red; */
-  padding-left: 10px;
-  border-radius: 20px;
-  width:50%;
-  font-size: 1.4rem;
-  font-variant: small-caps;
-  letter-spacing: 1px;
-}
-
-.hero_section{
-  /* border: 1px solid #000;
+    .hero_section {
+      /* border: 1px solid #000;
   padding-inline: 0px; */
-  margin-top:-10px;
-  display:flex;
-}
+      margin-top: -10px;
+      display: flex;
+    }
 
-.container {
-  background: linear-gradient(to right, rgba(3, 3, 3, 0.555), #ffffff75);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: 30%;
-  margin: 20px;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.container > h1{
-    font-size:2rem;
-    text-transform: capitalize;
-    text-align: center;
-}
-.container > p{
-    font-variant: none;
-    text-align: center;
-    font-size:1.2rem;
-    margin-block:20px;
-}
+    .container {
+      background: linear-gradient(to right, rgba(3, 3, 3, 0.555), #ffffff75);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      width: 30%;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .container > h1 {
+      font-size: 2rem;
+      text-transform: capitalize;
+      text-align: center;
+    }
+    .container > p {
+      font-variant: none;
+      text-align: center;
+      font-size: 1.2rem;
+      margin-block: 20px;
+    }
 
-.container button{
-  margin-top:10px;
-  padding:15px 25px;
-  border:none;
-  box-shadow: 2px 2px 5px black;
-  font-variant: small-caps;
-  font-weight: 500;
-  font-size: 1.1rem;
-  background:#000;
-  color:white;
-  border-radius: 25px;
-  transition: color, background, box-shadow, 0.5s;
-}
-.container button:hover{
-  color:#000;
-  background:#ece9e9;
-}
+    .container button {
+      margin-top: 10px;
+      padding: 15px 25px;
+      border: none;
+      box-shadow: 2px 2px 5px black;
+      font-variant: small-caps;
+      font-weight: 500;
+      font-size: 1.1rem;
+      background: #000;
+      color: white;
+      border-radius: 25px;
+      transition: color, background, box-shadow, 0.5s;
+    }
+    .container button:hover {
+      color: #000;
+      background: #ece9e9;
+    }
 
-#map{
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin: 20px 20px 0px 0px;
-  width: 70%;
-  padding: 20px 0px 20px 0px;
-  height: 100vh;
-  visibility: hidden;
-}
+    #map {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 20px 20px 0px 0px;
+      width: 70%;
+      padding: 20px 0px 20px 0px;
+      height: 100vh;
+      visibility: hidden;
+    }
 
-#showNearbyMarkers {
-        position: absolute;
-        top: 90vh;
-        right: 10px;
-        padding: 10px 20px;
-        background-color: #4caf50; /* Green background */
-        border: none; /* No border */
-        color: white; /* White text */
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        transition-duration: 0.4s; /* Transition effect */
-        cursor: pointer;
-        border-radius: 4px;
-        z-index: 1;
-      }
+    #showNearbyMarkers {
+      position: absolute;
+      top: 90vh;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #4caf50; /* Green background */
+      border: none; /* No border */
+      color: white; /* White text */
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      transition-duration: 0.4s; /* Transition effect */
+      cursor: pointer;
+      border-radius: 4px;
+      z-index: 1;
+    }
 
-      #showNearbyMarkers:hover {
-        background-color: #45a049; /* Darker green when you hover over it */
-      }
+    #showNearbyMarkers:hover {
+      background-color: #45a049; /* Darker green when you hover over it */
+    }
 
-      /* Style for the Mapbox Directions control */
-      .mapboxgl-ctrl-directions {
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.9
-        ); /* Semi-transparent white background */
-        border-radius: 0px; /* No rounded corners */
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
-        font-family: "Roboto", sans-serif; /* Google Maps uses the Roboto font */
-        color: #333; /* Dark grey text color */
-      }
+    /* Style for the Mapbox Directions control */
+    .mapboxgl-ctrl-directions {
+      background-color: rgba(
+        255,
+        255,
+        255,
+        0.9
+      ); /* Semi-transparent white background */
+      border-radius: 0px; /* No rounded corners */
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 3D effect */
+      font-family: "Roboto", sans-serif; /* Google Maps uses the Roboto font */
+      color: #333; /* Dark grey text color */
+    }
 
-      /* #map {
+    /* #map {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -250,55 +255,63 @@ p {
       }
     */
 
-      #showNearMarkers {
-        position: absolute;
-        top: 82vh;
-        right: 10px;
-        padding: 10px 20px;
-        background-color: rgb(64, 64, 144); /* Green background */
-        border: none; /* No border */
-        color: white; /* White text */
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        transition-duration: 0.4s; /* Transition effect */
-        cursor: pointer;
-        border-radius: 4px;
-        z-index: 1;
-      }
+    #showNearMarkers {
+      position: absolute;
+      top: 82vh;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: rgb(64, 64, 144); /* Green background */
+      border: none; /* No border */
+      color: white; /* White text */
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      transition-duration: 0.4s; /* Transition effect */
+      cursor: pointer;
+      border-radius: 4px;
+      z-index: 1;
+    }
 
-      #showNearMarkers:hover {
-        background-color: #0056a9;
-      }
+    #showNearMarkers:hover {
+      background-color: #0056a9;
+    }
+  </style>
 
-</style>
-
-<body>
+  <body>
     <nav>
-        <div class="navbar">
-            <div class="logo">
-                <h1>EvacSafe</h1>
-            </div>
-            <div class="nav-links">
-                <ul class="flex">
-                    <li><a href="#" class="hover-links">Notifications</a></li>
-                    <li><a href="#map" class="hover-links">Maps</a></li>
-                    <li><a href="http://localhost:8081/" class="hover-links signin">HEALTH PREDICT</a></li>
-                </ul>
-            </div>
+      <div class="navbar">
+        <div class="logo">
+          <h1>Rapid</h1>
         </div>
+        <div class="nav-links">
+          <ul class="flex">
+            <li><a href="#" class="hover-links">Notifications</a></li>
+            <li><a href="#map" class="hover-links">Maps</a></li>
+            <li>
+              <a href="http://localhost:8081/" class="hover-links signin"
+                >HEALTH PREDICT</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
     <header>
       <h1>Evac Safe</h1>
-      <p>EvacSafe helps in navigating war victims to safe zones through real-time data. </p>
+      <p>
+        EvacSafe helps in navigating war victims to safe zones through real-time
+        data.
+      </p>
     </header>
-    
-    <section class="hero_section">
 
+    <section class="hero_section">
       <div class="container">
-        <h1>Find Safety During War</h1>
-        <p>Navigate to safe zones and watch live feeds, all powered by advanced AI technologies.</p>
+        <h1>Find Safety During tsunami</h1>
+        <p>
+          Navigate to safe zones and watch live feeds, all powered by advanced
+          AI technologies.
+        </p>
         <button class="btn">Navigate Safe Zone</button>
       </div>
 
@@ -306,320 +319,331 @@ p {
         <button id="showNearbyMarkers">Show Nearby Safezone</button>
         <button id="showNearMarkers">Show Nearest Safezone</button>
         <div id="map1"></div>
-
       </div>
-
     </section>
-</body>
+  </body>
 
-<script>
-  const navigate = document.getElementsByClassName("btn")[0];
-  const mapp = document.getElementById("map");
-  navigate.addEventListener("click", function() {
-    mapp.style.visibility = "visible";
-  })
+  <script>
+    const navigate = document.getElementsByClassName("btn")[0];
+    const mapp = document.getElementById("map");
+    navigate.addEventListener("click", function () {
+      mapp.style.visibility = "visible";
+    });
+  </script>
 
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <script>
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoiYWRlc2gxMjI2IiwiYSI6ImNsb2s2YzRqcDI0N3Mya3BsOXUzdGQ2YXkifQ.rRL-cGdC7uw-6IMQczNjrA";
+    const map = new mapboxgl.Map({
+      container: "map",
+      style: "mapbox://styles/mapbox/dark-v11",
+      center: [77.23, 28.61],
+      zoom: 9,
+    });
 
-    <script>
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoiYWRlc2gxMjI2IiwiYSI6ImNsb2s2YzRqcDI0N3Mya3BsOXUzdGQ2YXkifQ.rRL-cGdC7uw-6IMQczNjrA";
-      const map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/dark-v11",
-        center: [77.23, 28.61],
-        zoom: 9,
-      });
+    const Places = [
+      {
+        name: "Hansalaya Building",
+        LngLat: [77.225252, 28.6286163],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Hansalya.csv",
+        areaSqFt: 18798.94,
+      },
+      {
+        name: "NDMC",
+        LngLat: [28.6283916, 77.2153561],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "NDMC.csv",
+        areaSqFt: 9849.32,
+      },
+      {
+        name: "civic center skyscraper",
+        LngLat: [28.6408905, 77.2268046],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "civic.csv",
+        areaSqFt: 56727.68,
+      },
 
-      const Places = [
-        {
-          name: "Hansalaya Building",
-         LngLat:[77.225252,28.6286163],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Hansalya.csv",
-        },
-        {
-          name: "NDMC",
-          LngLat: [28.6283916,77.2153561],
-          capacity: 0,
-          capacityLimit: 4,
-          csvFile: "NDMC.csv",
-        },
-        {
-          name: "civic center skyscraper",
-          LngLat: [28.6408905,77.2268046],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "civic.csv",
-        },
+      {
+        name: "Amba Deep Building",
+        LngLat: [28.6271876, 77.2235262],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Amba.csv",
+        areaSqFt: 12095.61,
+      },
 
-        {
-          name: "Amba Deep Building",
-          LngLat: [28.6271876,77.2235262],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Amba.csv",
-        },
+      {
+        name: "Unity Tower",
+        LngLat: [28.7150133, 77.1127266],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Unity.csv",
+        areaSqFt: 49719.42,
+      },
+      {
+        name: "Jeevan Prakash",
+        LngLat: [28.6285324, 77.2213074],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Jeevan.csv",
+        areaSqFt: 7239.38,
+      },
+      {
+        name: "Himalaya House",
+        LngLat: [28.628189, 77.2206694],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Himalaya.csv",
+        areaSqFt: 17045.36,
+      },
+      {
+        name: "rashtrapati bhavan",
+        LngLat: [28.6139635, 77.1955089],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "rashtrapati.csv",
+        areaSqFt: 191215.44,
+      },
 
-        {
-          name: "Unity Tower",
-          LngLat: [28.7150133,77.1127266],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Unity.csv",
-        },
-        {
-          name: "Jeevan Prakash",
-          LngLat: [28.6285324,77.2213074],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Jeevan.csv",
-        },
-        {
-          name: "Himalaya House",
-          LngLat: [28.628189,77.2206694],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Himalaya.csv",
-        },
-        {
-          name: "rashtrapati bhavan",
-          LngLat: [28.6139635,77.1955089],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "rashtrapati.csv",
-        },
+      {
+        name: "eros corporate tower",
+        LngLat: [28.5500661, 77.2509289],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "eros.csv",
+        areaSqFt: 11597.2,
+      },
 
-        {
-          name: "eros corporate tower",
-          LngLat: [28.5500661,77.2509289],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "eros.csv",
-        },
+      {
+        name: "dlf one midtown",
+        LngLat: [28.6643789, 77.1564123],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "dlf_one.csv",
+        areaSqFt: 1265.99,
+      },
 
-        {
-          name: "dlf one midtown",
-          LngLat: [28.6643789,77.1564123],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "dlf_one.csv",
-        },
-        
-        {
-          name: "SCOPE MINAR",
-          LngLat: [28.6392305,77.283261],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "Scope.csv",
-        },
-        {
-          name:"bank of baroda building",
-          LngLat:[28.6265075,77.2100339],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "bank.csv",
+      {
+        name: "SCOPE MINAR",
+        LngLat: [28.6392305, 77.283261],
+        capacity: 0,
+        capacityLimit: 0,
+        csvFile: "Scope.csv",
+        areaSqFt: 28389.91,
+      },
+      {
+        name: "bank of baroda building",
+        LngLat: [28.6265075, 77.2100339],
+        capacity: 0,
+        capacityLimit: 5,
+        csvFile: "bank.csv",
+        areaSqFt: 17622.36,
+      },
+      {
+        name: "ifci tower",
+        LngLat: [28.5498554, 77.25273],
+        capacity: 0,
+        capacityLimit: 5,
+        csvFile: "ifci.csv",
+        areaSqFt: 9684.2,
+      },
+    ];
+
+    function updateCapacityLimits(Places) {
+      const sqFtPerPerson = 10; // Replace with the actual standard
+      for (let place of Places) {
+        if (place.areaSqFt) {
+          place.capacityLimit = Math.floor(place.areaSqFt / sqFtPerPerson);
         }
-        ,
-        {
-          name:"ifci tower",
-          LngLat:[28.5498554,77.25273],
-          capacity: 0,
-          capacityLimit: 5,
-          csvFile: "ifci.csv",
-        }
-
-
-
-
-
-
-      
-      ];
-
-      Places.forEach((place) => {
-        Papa.parse(place.csvFile, {
-          download: true,
-          header: true,
-          complete: function (results) {
-            const row = results.data[0];
-            // console.log(row);
-            // console.log(place.name);
-            if (row && row.TotalInside) {
-              place.capacity = parseInt(row.TotalInside, 10);
-              console.log(place.name);
-              console.log(place.capacity);
-              // Update the capacity
-            }
-            // if(row&& row.CapacityLimit){
-            //   place.capacityLimit = parseInt(row.CapacityLimit, 10);
-            //   console.log(place.capacityLimit);
-            // }
-          },
-        });
-      });
-
-      //
-      function calculateDistance(coord1, coord2) {
-        const R = 6371e3; // metres
-        const x = (coord1[1] * Math.PI) / 180; // φ, λ in radians
-        const y = (coord2[1] * Math.PI) / 180;
-        const z = ((coord2[1] - coord1[1]) * Math.PI) / 180;
-        const z1 = ((coord2[0] - coord1[0]) * Math.PI) / 180;
-
-        const a =
-          Math.sin(z / 2) * Math.sin(z / 2) +
-          Math.cos(x) * Math.cos(y) * Math.sin(z1 / 2) * Math.sin(z1 / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return R * c; // in metres
       }
-      // Define a function to show nearby markers within a 10km range
-      function showNearbyMarkers() {
-        if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            const userLocation = [
-              position.coords.longitude,
-              position.coords.latitude,
-            ];
+    }
 
-            // Clear existing markers
-            document
-              .querySelectorAll(".marker")
-              .forEach((markerElement) => markerElement.remove());
+    updateCapacityLimits(Places);
 
-            // Filter and display markers within a 10km range
-            Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
-              console.log("Capacity: " + capacity);
-              console.log("Capacity Limit: " + capacityLimit);
+    Places.forEach((place) => {
+      Papa.parse(place.csvFile, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          const row = results.data[0];
+          // console.log(row);
+          // console.log(place.name);
+          if (row && row.TotalInside) {
+            place.capacity = parseInt(row.TotalInside, 10);
+            console.log(place.name);
+            console.log(place.capacity);
+            // Update the capacity
+          }
+          // if(row&& row.CapacityLimit){
+          //   place.capacityLimit = parseInt(row.CapacityLimit, 10);
+          //   console.log(place.capacityLimit);
+          // }
+        },
+      });
+    });
 
-              if (LngLat && capacity <= capacityLimit) {
-                // Check the capacity here
-                const distance = calculateDistance(userLocation, LngLat);
+    //
+    function calculateDistance(coord1, coord2) {
+      const R = 6371e3; // metres
+      const x = (coord1[1] * Math.PI) / 180; // φ, λ in radians
+      const y = (coord2[1] * Math.PI) / 180;
+      const z = ((coord2[1] - coord1[1]) * Math.PI) / 180;
+      const z1 = ((coord2[0] - coord1[0]) * Math.PI) / 180;
 
-                if (distance <= 50000) {
-                  const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-                    `${name} (CapacityLimit: ${capacityLimit})` // Include the capacity in the popup text
-                  );
-                  const marker = new mapboxgl.Marker({ scale: 1 })
-                    .setLngLat(LngLat)
-                    .setPopup(popup)
-                    .addTo(map)
-                    .getElement();
-                  marker.classList.add("marker");
-                  console.log("Marker Added: " + name);
-                }
+      const a =
+        Math.sin(z / 2) * Math.sin(z / 2) +
+        Math.cos(x) * Math.cos(y) * Math.sin(z1 / 2) * Math.sin(z1 / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-                map.flyTo({
-                  zoom: 11, // Adjust the zoom level as needed
-                  essential: true, // This ensures a smooth animation
-                });
-                console.log(
-                  "Distance to " + name + ": " + distance + " meters"
+      return R * c; // in metres
+    }
+    // Define a function to show nearby markers within a 10km range
+    function showNearbyMarkers() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const userLocation = [
+            position.coords.longitude,
+            position.coords.latitude,
+          ];
+
+          // Clear existing markers
+          document
+            .querySelectorAll(".marker")
+            .forEach((markerElement) => markerElement.remove());
+
+          // Filter and display markers within a 10km range
+          Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
+            console.log("Capacity: " + capacity);
+            console.log("Capacity Limit: " + capacityLimit);
+
+            if (LngLat && capacity <= capacityLimit) {
+              // Check the capacity here
+              const distance = calculateDistance(userLocation, LngLat);
+
+              if (distance <= 50000) {
+                const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+                  `${name} (CapacityLimit: ${capacityLimit})` // Include the capacity in the popup text
                 );
+                const marker = new mapboxgl.Marker({ scale: 1 })
+                  .setLngLat(LngLat)
+                  .setPopup(popup)
+                  .addTo(map)
+                  .getElement();
+                marker.classList.add("marker");
+                console.log("Marker Added: " + name);
               }
-            });
-          });
-        } else {
-          alert("Geolocation is not available in your browser.");
-        }
-      }
-
-      document
-        .getElementById("showNearbyMarkers")
-        .addEventListener("click", showNearbyMarkers);
-
-      // Your existing map controls here
-
-      function showNearestMarker() {
-        if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            const userLocation = [
-              position.coords.longitude,
-              position.coords.latitude,
-            ];
-
-            let nearestMarker = null;
-            let nearestDistance = Infinity;
-
-            // Find the nearest marker
-            Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
-              console.log("Capacity: " + capacity);
-              console.log("Capacity Limit: " + capacityLimit);
-
-              if (LngLat && capacity <= capacityLimit) {
-                const distance = calculateDistance(userLocation, LngLat);
-
-                if (distance < nearestDistance) {
-                  nearestDistance = distance;
-                  nearestMarker = { name, LngLat, capacityLimit };
-                }
-              }
-            });
-
-            // Clear existing markers
-            document
-              .querySelectorAll(".marker")
-              .forEach((markerElement) => markerElement.remove());
-
-            // Display the nearest marker
-            if (nearestMarker) {
-              const { name, LngLat, capacityLimit } = nearestMarker;
-
-              const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-                `${name} (CapacityLimit: ${capacityLimit})`
-              ); // Include the capacity in the popup text
-              const marker = new mapboxgl.Marker({ scale: 1 })
-                .setLngLat(LngLat)
-                .setPopup(popup)
-                .addTo(map)
-                .getElement();
-              marker.classList.add("marker");
-              console.log("Nearest Marker Added: " + name);
 
               map.flyTo({
-                center: LngLat,
-                zoom: 12, // Adjust the zoom level as needed
+                zoom: 11, // Adjust the zoom level as needed
                 essential: true, // This ensures a smooth animation
               });
-
-              directions.setOrigin([
-                position.coords.longitude,
-                position.coords.latitude,
-              ]);
-              directions.setDestination(LngLat);
+              console.log("Distance to " + name + ": " + distance + " meters");
             }
           });
-        } else {
-          alert("Geolocation is not available in your browser.");
-        }
+        });
+      } else {
+        alert("Geolocation is not available in your browser.");
       }
+    }
 
-      document
-        .getElementById("showNearMarkers")
-        .addEventListener("click", showNearestMarker);
+    document
+      .getElementById("showNearbyMarkers")
+      .addEventListener("click", showNearbyMarkers);
 
-      map.on("load", function () {
-        map.addControl(
-          new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-          }),
-          "bottom-left"
-        );
-      });
+    // Your existing map controls here
 
+    function showNearestMarker() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const userLocation = [
+            position.coords.longitude,
+            position.coords.latitude,
+          ];
+
+          let nearestMarker = null;
+          let nearestDistance = Infinity;
+
+          // Find the nearest marker
+          Places.forEach(({ name, LngLat, capacity, capacityLimit }) => {
+            console.log("Capacity: " + capacity);
+            console.log("Capacity Limit: " + capacityLimit);
+
+            if (LngLat && capacity <= capacityLimit) {
+              const distance = calculateDistance(userLocation, LngLat);
+
+              if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestMarker = { name, LngLat, capacityLimit };
+              }
+            }
+          });
+
+          // Clear existing markers
+          document
+            .querySelectorAll(".marker")
+            .forEach((markerElement) => markerElement.remove());
+
+          // Display the nearest marker
+          if (nearestMarker) {
+            const { name, LngLat, capacityLimit } = nearestMarker;
+
+            const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+              `${name} (CapacityLimit: ${capacityLimit})`
+            ); // Include the capacity in the popup text
+            const marker = new mapboxgl.Marker({ scale: 1 })
+              .setLngLat(LngLat)
+              .setPopup(popup)
+              .addTo(map)
+              .getElement();
+            marker.classList.add("marker");
+            console.log("Nearest Marker Added: " + name);
+
+            map.flyTo({
+              center: LngLat,
+              zoom: 12, // Adjust the zoom level as needed
+              essential: true, // This ensures a smooth animation
+            });
+
+            directions.setOrigin([
+              position.coords.longitude,
+              position.coords.latitude,
+            ]);
+            directions.setDestination(LngLat);
+          }
+        });
+      } else {
+        alert("Geolocation is not available in your browser.");
+      }
+    }
+
+    document
+      .getElementById("showNearMarkers")
+      .addEventListener("click", showNearestMarker);
+
+    map.on("load", function () {
       map.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true,
-          },
-          trackUserLocation: true,
-          showUserHeading: true,
-        })
+        new MapboxDirections({
+          accessToken: mapboxgl.accessToken,
+        }),
+        "bottom-left"
       );
-    </script>
+    });
 
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+    );
+  </script>
 </html>

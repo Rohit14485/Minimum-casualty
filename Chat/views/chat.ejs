@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Socket.IO chat</title>
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  background-color: #E5DDD5;
+  margin: 0;
+  padding: 0;
+}
+
+#form {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #F0F0F0;
+}
+
+#form>input {
+  width: 80%;
+  border: none;
+  padding: 1rem;
+  border-radius: 2rem;
+  outline: none;
+}
+    #input:focus {
+      outline: none;
+    }
+
+    #form>button {
+  background: #128C7E;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+}
+
+.user {
+  text-align: right;
+  background-color: #DCF8C6;
+  
+}
+
+.other {
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+    #messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  height: 90vh;
+  background-color: #E5DDD5;
+}
+#messages>li {
+  max-width: 60%;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #DCF8C6;
+  position: relative;
+  word-wrap: break-word;
+}
+
+#messages>li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -0.5rem;
+  width: 0;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-left-color: #DCF8C6;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -0.2rem;
+  margin-right: -0.2rem;
+}
+
+
+.timestamp {
+  font-size: 0.8em;
+  color: #888;
+  float: right;
+  padding-right: 10px;
+}
+
+
+
+#circle {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  font-size: 70%;
+  color: #fff;
+  text-align: center;
+  background: #000;
+  animation: pulse 2s infinite;
+}
+.message-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#circle {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.message-content {
+  flex-grow: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+  </style>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+
+  <form id="form" action="">
+    <input id="input" autocomplete="off" />
+    <button>Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+
+    var url = window.location.href;
+    var name = url.replaceAll('http://localhost:8080/chat/', '');
+
+    let counter = 0;
+
+    const socket = io({
+      ackTimeout: 10000,
+      retries: 3,
+      auth: {
+        serverOffset: 0
+      }
+    });
+
+    const form = document.getElementById('form');
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
+    var date = new Date();
+    d = date.toString();
+
+
+    var position = url.search("http://localhost:8080/chat/SOS/");
+    // if(position != -1){
+    //   // alert(position)
+    //   document.getElementById("input").setAttribute("value", "Pls Help");
+    //   document.getElementById("input").value = "Pls help"
+    //   document.getElementById("form").submit();
+    //   position = -1;
+    // }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (input.value) {
+        // alert(position)
+        const clientOffset = `${socket.id}-${counter++}`;
+        
+        if (position != -1) {
+          // alert(position)
+          var mess;
+          name = name.replace("SOS/", "")
+          input.value = name + ":" + "SOS MESSAGE " + input.value + ":" + d;
+          position = -1;
+        }
+        else {
+          input.value = name + ":" + input.value + ":" + d;
+        }
+
+        socket.emit('chat message', input.value, name, d, clientOffset);
+        input.value = '';
+      }
+    });
+
+    socket.on('chat message', (msg, user, time, serverOffset) => {
+      const item = document.createElement('li');
+      // alert(msg)
+      item.textContent = msg;
+      var arr = msg
+      arr = arr.split(":")
+      //item.innerHTML = "<div id='circle'>" + arr[0] + "</div>" + arr[1] + "<br>" + "<div class='timestamp'>"+ arr[2]+"<div>";
+      item.innerHTML=  `<div class="message-wrapper"><div id='circle'>${arr[0]}</div><div class="message-content">${arr[1]}</div></div><div class='timestamp'>${arr[2]}</div> `;
+
+      if (user === name) {
+    item.classList.add('user');
+  } else {
+    item.classList.add('other');
+  }
+
+
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight; 
+      socket.auth.serverOffset = serverOffset;
+    });
+  </script>
+</body>
+
+</html>

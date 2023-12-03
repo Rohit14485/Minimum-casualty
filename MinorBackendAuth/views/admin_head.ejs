@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EvacSafe</title>
+    <title>Admin Center</title>
   </head>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap");
@@ -44,7 +44,8 @@
       /* border:1px solid red; */
       font-size: 3em;
       font-weight: 900;
-      color: rgb(246, 161, 15);
+      color: white;
+      text-shadow:8px 5px 5px rgba(7,95,230,255);
     }
     .hover-links {
       transition-property: color;
@@ -54,7 +55,7 @@
       color: white;
     }
     .hover-links:hover {
-      color: rgb(246, 161, 15);
+      color: rgba(7,95,230,255);
     }
     .flex {
       /* border:1px solid black; */
@@ -243,15 +244,16 @@
 
           <label for="locations">Select Video:</label>
           <select id="video" name="video">
-            <option value="ex2.mp4">Vid 1</option>
-            <option value="ex3.mp4">Vid 2</option>
-            <option value="ex4.mp4">Vid 3</option>
-            <option value="example_01.mp4">Vid 4</option>
+            <option value="golive">Go live</option>
+            <option value="ex1.mp4">Vid 1</option>
+            <option value="ex2.mp4">Vid 2</option>
+            <option value="ex3.mp4">Vid 3</option>
+            <option value="ex4.mp4">Vid 4</option>
           </select>
 
           <br />
 
-          <button class="live">Upload Live</button>
+ 
 
           <br />
 
@@ -290,11 +292,9 @@
 
           <br />
 
-          <button class="live">Upload Live</button>
-
           <br />
 
-          <button type="button">Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     </section>
